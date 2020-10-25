@@ -1,0 +1,247 @@
+#main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.background {
+  z-index: -10;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.background .img-background {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+  grid-template-areas:
+  'principal secondary';
+
+  grid-gap: 30px;
+
+  background-color: var(--content-bg);
+  backdrop-filter: blur(30px);
+  border-radius: 12px;
+  padding: 30px;
+  width: 90%;
+}
+
+div.principal {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  grid-area: principal;
+}
+
+div.principal .header {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+div.principal .header .cityInput {
+  width: 70%;
+  height: 50px;
+  border: 2px solid #FFFFFF;
+  border-radius: 12px;
+  background: none;
+  padding: 10px 15px;
+  outline: none;
+  color: #FFFFFF;
+  font-size: 20px;
+}
+
+div.principal .header .searchButton {
+  color: #FFFFFF;
+  background-color: var(--search-button-bg);
+  height: 52px;
+  width: 52px;
+  border: none;
+  border-radius: 12px;
+  font-size: 22px;
+  margin-left: 12px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+div.principal .result {
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid var(--color-text-light);
+  padding: 25px 0px;
+}
+
+div.principal .result img {
+  height: 90px;
+}
+
+div.principal .result h1 {
+  position: relative;
+  font-size: 100px;
+  color: #FFFFFF;
+}
+
+div.principal .result h1 span {
+  font-size: 20px;
+  margin-left: 10px;
+}
+
+div.principal .result .description {
+  font-size: 20px;
+  line-height: 40px;
+  color: var(--color-text-light);
+}
+
+div.principal .result .local {
+  font-size: 22px;
+  line-height: 40px;
+  color: #FFFFFF;
+}
+
+div.principal .other-results {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+div.principal .other-results .other {
+  font-size: 18px;
+  text-align: center;
+  color: var(--color-text-light);
+  line-height: 40px;
+  padding: 18px;
+}
+
+div.principal .other-results .other span {
+  font-size: 26px;
+}
+
+div.secondary {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 80px 1fr;
+  grid-template-areas:
+  'header'
+  'figure'
+  ;
+  width: 100%;
+}
+
+div.secondary .secondary-results {
+  grid-area: header;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+div.secondary .secondary-results .other-secondary-results {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  text-align: left;
+  color: var(--color-text);
+  line-height: 25px;
+  padding: 18px;
+}
+
+.other-secondary-results p {
+  margin-left: 10px;
+}
+
+.other-secondary-results .icon-secondary-results {
+  font-size: 50px
+}
+
+.other-secondary-results .humidity{
+  font-size: 35px;
+  color: aquamarine;
+}
+
+.secondary .landing-figure {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  grid-area: figure;
+  padding: 0 20px;
+}
+
+.secondary .landing-figure > img {
+  max-width: 100%;
+}
+
+@media (max-width: 1200px) {
+  div.principal .result img {
+    height: 70px;
+  }
+  
+  div.principal .result h1 {
+    font-size: 80px;
+  }
+  
+  div.principal .result h1 span {
+    font-size: 16px;
+    margin-left: 10px;
+  }
+  
+  div.principal .result .description {
+    font-size: 16px;
+    line-height: 40px;
+    color: var(--color-text-light);
+  }
+  
+  div.principal .result .local {
+    font-size: 16px;
+    line-height: 40px;
+    color: #FFFFFF;
+  }
+
+  div.principal .other-results .other {
+    font-size: 14px;
+  }
+  
+  div.principal .other-results .other span {
+    font-size: 22px;
+  }
+  
+  div.secondary .secondary-results .other-secondary-results {
+    flex-direction: column;
+    font-size: 14px;
+    text-align: center;
+  }
+}
+
+@media (max-width: 1000px) {
+  .content {
+    position: absolute;
+    top: 50px;
+    display: grid;
+    margin-bottom: 50px;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas:
+    'principal'
+    'secondary';
+  }
+}

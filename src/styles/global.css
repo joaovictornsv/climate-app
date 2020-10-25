@@ -1,0 +1,23 @@
+:root {
+  --transparent: rgba(255,255,255,0);
+  --color-text: #FFF;
+  --color-text-light: rgba(255,255,255,0.7);
+  --search-button-bg: #15C6BF;
+  --content-bg: rgba(170, 170, 170, 0.3);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+body, input {
+  font-family: 'Nunito', sans-serif;
+}
