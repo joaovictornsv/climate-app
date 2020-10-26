@@ -297,7 +297,10 @@ function Landing() {
         </div>
       </div> {/*content*/}
       <div className="credits">
-        by&nbsp;<a href="https://github.com/joaovictornsv"><strong>João Victor</strong></a>
+        by&nbsp;
+        <a href="https://github.com/joaovictornsv" target="_blank" rel="noopener noreferrer">
+          <strong>João Victor</strong>
+        </a>
       </div>
       </div>
      
