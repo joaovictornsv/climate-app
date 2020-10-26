@@ -91,11 +91,11 @@ function Landing() {
       break
 
     case 'Clouds':
-      LandingImg = cloudyFigure;
+      LandingImg = sunFigure;
       break
 
     case 'Haze':
-      LandingImg = thunderFigure;
+      LandingImg = cloudyFigure;
       break
 
     case 'Thunderstorm':
