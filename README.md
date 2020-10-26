@@ -13,9 +13,10 @@ Climate App
 <img  alt="Last Commit"  src="https://img.shields.io/github/last-commit/joaovictornsv/climate-app">
 <img  alt="Repo Size"  src="https://img.shields.io/github/repo-size/joaovictornsv/climate-app">
 <a  href="https://github.com/joaovictornsv/climate-app/blob/master/LICENSE">
-<img  alt="License"  src="https://img.shields.io/github/license/joaovictornsv/climate-app">
+<img  alt="License"  src="https://img.shields.io/github/license/joaovictornsv/climate-app.svg">
 </a>
 </p>
+  
 <!-- Nav Menu -->
 <a  href=#telescope-tecnologias>Technologies</a>&nbsp;&nbsp;|&nbsp;&nbsp;
 <a href="#information_source-how-to-use">How To Use</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
