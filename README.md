@@ -1,8 +1,7 @@
 <div  align="center">
 <!-- Top Image and Title -->
-<!-- <img  src="###"  width="300px"><br/> -->
 <h1>
-Climate App
+<img  src="https://i.imgur.com/WLvRyT3.png"  width="300px"><br/>
 </h1>
 <!-- Subtitle/Description -->
 <h4>Description</h4>
