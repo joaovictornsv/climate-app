@@ -1,11 +1,11 @@
 #main {
   display: flex;
   justify-content: center;
-  align-items: center;
-  height: 100vh;
+  align-items: flex-start;
 }
 
 .main-grid {
+  margin-top: 40px;
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 30px 1fr 30px;
@@ -307,7 +307,7 @@ div.secondary .secondary-results .other-secondary-results {
   
   .background .img-background {
     position: fixed;
-    height: 100vh;
+    height: 170%;
     width: auto;
   }
 
