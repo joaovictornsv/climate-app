@@ -5,7 +5,7 @@ import { WiCloudy, WiStrongWind }  from 'react-icons/wi';
 import '../styles/global.css'
 import '../styles/pages/Landing.css';
 
-import climateLogo from '../assets/images/climateLogo.png';
+import climateLogo from '../assets/images/climateLogo.svg';
 
 import inicialFigure from '../assets/images/landing_svgs/inicial.svg';
 import rainFigure from '../assets/images/landing_svgs/rain.svg';
