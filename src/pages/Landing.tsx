@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { FormEvent, useState } from 'react';
 import { RiSearchLine, RiDropFill }  from 'react-icons/ri';
 import { WiCloudy, WiStrongWind }  from 'react-icons/wi';
 
 import '../styles/global.css'
 import '../styles/pages/Landing.css';
+
+import climateLogo from '../assets/images/climateLogo.png';
 
 import inicialFigure from '../assets/images/landing_svgs/inicial.svg';
 import rainFigure from '../assets/images/landing_svgs/rain.svg';
@@ -12,7 +14,11 @@ import snowFigure from '../assets/images/landing_svgs/snow.svg';
 import thunderFigure from '../assets/images/landing_svgs/thunder.svg';
 import cloudyFigure from '../assets/images/landing_svgs/cloudy.svg';
 
+import initialIcon from '../assets/images/icons/04.svg';
+
 import dayBg from '../assets/images/day_bg.png';
+import nightBg from '../assets/images/night_bg.jpg';
+
 import api from '../services/api';
 
 interface WeatherData {
@@ -81,11 +87,15 @@ function Landing() {
 
   switch (data?.weather[0].main) {
     case 'Clear':
-      LandingImg = sunFigure
+      LandingImg = sunFigure;
       break
 
     case 'Clouds':
-      LandingImg = cloudyFigure
+      LandingImg = cloudyFigure;
+      break
+
+    case 'Haze':
+      LandingImg = thunderFigure;
       break
 
     case 'Thunderstorm':
@@ -113,7 +123,7 @@ function Landing() {
   const paths = icons.keys ()
   const images = paths.map( path => icons ( path ) )
 
-  let icon = images[0].default
+  let icon = initialIcon
 
   switch (data?.weather[0].icon) {
     case '01d':
@@ -171,15 +181,18 @@ function Landing() {
     case '50n':
       icon = images[13].default
       break
-
-    default:
-      icon = images[0].default
-      break
   }
 
-  console.log(images[0].default)
+  let background = dayBg
 
-  function handleCity() {
+  switch (data?.weather[0].icon.slice(2)) {
+    case 'n':
+      background = nightBg
+  }
+
+  function handleCity(e: FormEvent) {
+    e.preventDefault();
+    
     api.get(`?q=${city}&appid=13e1cd524d80dabc2435ce6035f78427&lang=pt_br&units=metric`).then(response => {
       setData(response.data)
       console.log(response.data)
@@ -193,25 +206,31 @@ function Landing() {
   return (
     <div id="main" >
       <div className="background">
-        <img src={dayBg} alt="" className="img-background"/>
+        <img src={background} alt="Wallpaper" className="img-background"/>
+      </div>
+      <div className="main-grid">
+      <div className="app-name">
+        <img src={climateLogo} alt="Climate"/>
       </div>
       <div className="content">
-
-
         <div className="principal">
           <div className="header">
-            <input
-              placeholder="Digite uma cidade"
-              type="text"
-              name="city"
-              value={city}
-              onChange={event => {setCity(event.target.value)}}
-              className="cityInput"
-            />
+            <form onSubmit={handleCity}>
+              <input
+                placeholder="Digite uma cidade"
+                type="text"
+                name="city"
+                value={city}
+                onChange={event => {setCity(event.target.value)}}
+                className="cityInput"
+                autoComplete="off"
+              />
 
-            <button type="submit" className="searchButton" onClick={handleCity}>
-              <RiSearchLine />
-            </button>
+              <button type="submit" className="searchButton">
+                <RiSearchLine />
+              </button>
+            </form>
+              
           </div>
           <div className="result">
             <img
@@ -277,6 +296,11 @@ function Landing() {
           
         </div>
       </div> {/*content*/}
+      <div className="credits">
+        by&nbsp;<a href="https://github.com/joaovictornsv"><strong>João Victor</strong></a>
+      </div>
+      </div>
+     
     </div> // main
   )
 }

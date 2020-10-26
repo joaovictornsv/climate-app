@@ -5,6 +5,45 @@
   height: 100vh;
 }
 
+.main-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 30px 1fr 30px;
+  grid-template-areas:
+  'logo'
+  'content'
+  'credits';
+  max-width: 90%;
+}
+
+.app-name {
+  grid-area: logo;
+  justify-self: flex-start;
+  padding-left: 10px;
+  align-items: center;
+}
+
+.credits {
+  grid-area: credits;
+  display: flex;
+  justify-self: flex-end;
+  align-items: center;
+  color:  rgba(255,255,255,0.4);
+  transition: color 0.2s;
+}
+
+.credits a {
+  color:  rgba(255,255,255,0.4);
+  cursor: pointer;
+  transition: color 0.2s;
+  text-decoration: none;
+  padding-right: 10px;
+}
+
+.credits:hover, .credits a:hover {
+  color: var(--color-text-light);
+}
+
 .background {
   z-index: -10;
   position: fixed;
@@ -19,6 +58,7 @@
 }
 
 .content {
+  grid-area: content;
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr;
@@ -31,7 +71,7 @@
   backdrop-filter: blur(30px);
   border-radius: 12px;
   padding: 30px;
-  width: 90%;
+  width: 100%;
 }
 
 div.principal {
@@ -39,11 +79,11 @@ div.principal {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: space-around;
   grid-area: principal;
 }
 
-div.principal .header {
+div.principal .header, div.principal .header form{
   display: flex;
   width: 100%;
   justify-content: center;
@@ -138,12 +178,12 @@ div.principal .other-results .other {
   font-size: 18px;
   text-align: center;
   color: var(--color-text-light);
-  line-height: 40px;
   padding: 18px;
 }
 
 div.principal .other-results .other span {
   font-size: 26px;
+  line-height: 40px;
 }
 
 div.secondary {
@@ -204,6 +244,18 @@ div.secondary .secondary-results .other-secondary-results {
 }
 
 @media (max-width: 1200px) {
+  .main-grid {
+    grid-template-rows: 18px 1fr 10px;
+  }
+
+  .app-name {
+    display: none;
+  }
+
+  .credits {
+    display: none;
+  }
+
   div.principal .result img {
     height: 70px;
   }
@@ -242,12 +294,29 @@ div.secondary .secondary-results .other-secondary-results {
     font-size: 14px;
     text-align: center;
   }
+
+  div.secondary .secondary-results .other-secondary-results p {
+    margin: 0;
+  }
 }
 
 @media (max-width: 1000px) {
+  #main {
+    align-items: flex-start;
+  }
+  
+  .background .img-background {
+    position: fixed;
+    height: 100vh;
+    width: auto;
+  }
+
+  .main-grid {
+    grid-template-rows: 70px 1fr 70px;
+  }
+
   .content {
-    position: absolute;
-    top: 50px;
+    grid-area: content;
     display: grid;
     margin-bottom: 50px;
     grid-template-columns: 1fr;
@@ -255,5 +324,40 @@ div.secondary .secondary-results .other-secondary-results {
     grid-template-areas:
     'principal'
     'secondary';
+    margin-bottom: 0;
+  }
+  
+  .app-name, .credits {
+    display: flex;
+    justify-self: center;
+    align-self: center;
+
+    justify-content: center;
+    align-items: center;
+  }
+
+  .credits a, .app-name{
+    padding: 0;
+  }
+
+  div.principal {
+    justify-content: space-evenly;
+  }
+  
+  div.principal .header .cityInput {
+    font-size: 16px;
+  }
+
+  div.principal .other-results {
+    border-bottom: 1px solid var(--color-text-light);
+  }
+  
+  div.principal .other-results .other span {
+    font-size: 20px;
+    line-height: 40px;
+  }
+
+  div.secondary .secondary-results .other-secondary-results p{
+    margin-left: 0;
   }
 }
