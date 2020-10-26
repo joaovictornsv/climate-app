@@ -278,7 +278,7 @@ function Landing() {
                 <WiStrongWind />
               </div>
               <p>Vento: <br/>
-              {data?.wind.speed.toFixed(1)} km/h</p>
+              {data?.wind.speed.toFixed(1)} m/s</p>
             </div>
 
             <div className="other-secondary-results">
