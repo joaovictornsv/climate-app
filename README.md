@@ -4,7 +4,7 @@
 <img  src="https://i.imgur.com/WLvRyT3.png"  width="300px"><br/>
 </h1>
 <!-- Subtitle/Description -->
-<h4>Description</h4>
+<h4>Climate App é uma aplicação responsável por mostrar dados climáticos de uma determinada cidade em tempo real.</h4>
 <p>
 <!-- Image Shields -->
 <img  alt="Language Top"  src="https://img.shields.io/github/languages/top/joaovictornsv/climate-app">
