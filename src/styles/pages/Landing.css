@@ -246,7 +246,8 @@ div.secondary .secondary-results .other-secondary-results {
 @media (max-width: 1250px) {
   .main-grid {
     margin-top: 10px;
-    grid-template-rows: 18px 1fr 10px;
+    grid-template-rows: 1fr;
+    grid-template-areas: 'content';
   }
 
   .app-name {
@@ -313,7 +314,15 @@ div.secondary .secondary-results .other-secondary-results {
   }
 
   .main-grid {
+    margin-top: 40px;
+    display: grid;
+    grid-template-columns: 1fr;
     grid-template-rows: 70px 1fr 70px;
+    grid-template-areas:
+    'logo'
+    'content'
+    'credits';
+    max-width: 95%;
   }
 
   .content {
