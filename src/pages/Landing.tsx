@@ -20,6 +20,7 @@ import dayBg from '../assets/images/day_bg.png';
 import nightBg from '../assets/images/night_bg.jpg';
 
 import api from '../services/api';
+import search from '../services/search';
 
 interface WeatherData {
   weather: Array<{
@@ -47,6 +48,19 @@ interface WeatherData {
   },
   timezone: number,
   name: string
+}
+
+interface SearchData {
+  list: Array<{
+    name: string,
+    coord: {
+      lat: number,
+      lon: number
+    },
+    sys: {
+      country: string
+    }
+  }>
 }
 
 function Landing() {
@@ -80,6 +94,8 @@ function Landing() {
 
   const [city, setCity] = useState<string>()
   const [data, setData] = useState<WeatherData>(dadosInicias)
+  const [results, setResults] = useState<SearchData>()
+  const [valid, setValid] = useState(true)
 
   //clear, clouds, thunderstorm, rain, drizzle, snow
 
@@ -195,7 +211,26 @@ function Landing() {
     
     api.get(`?q=${city}&appid=13e1cd524d80dabc2435ce6035f78427&lang=pt_br&units=metric`).then(response => {
       setData(response.data)
-      console.log(response.data)
+    }).catch(err => {setValid(false)})
+    
+    if (data.name !== '-') {
+      setValid(true)
+    }    
+  }
+
+  function handleCityByCordinates (lat: number, lon: number) {
+    api.get(`?lat=${lat}&lon=${lon}&appid=13e1cd524d80dabc2435ce6035f78427&lang=pt_br&units=metric`).then(response => {
+      setData(response.data)
+    })
+
+    setValid(true)
+  }
+
+  function handleChangeValue(value: string) {
+    setCity(value)
+
+    search.get(`?q=${value}&type=like&sort=population&cnt=30&appid=439d4b804bc8187953eb36d2a8c26a02&_=1604490628153`).then(response => {
+      setResults(response.data)
     })
   }
 
@@ -216,21 +251,39 @@ function Landing() {
         <div className="principal">
           <div className="header">
             <form onSubmit={handleCity}>
+              {!valid && (
+                <span className="snackbar">Cidade inválida</span>
+              )}
               <input
                 placeholder="Digite uma cidade"
                 type="text"
                 name="city"
                 value={city}
-                onChange={event => {setCity(event.target.value)}}
+                onChange={event => {handleChangeValue(event.target.value)}}
                 className="cityInput"
                 autoComplete="off"
               />
+
+              <div className="search-results">
+                {results && results.list.map(result => {
+                  const country = result.sys.country
+                  const flag = `https://raw.githubusercontent.com/hjnilsson/country-flags/master/png100px/${country.toLowerCase()}.png`
+                  return (
+                    <div className="result-item" onClick={() => handleCityByCordinates(result.coord.lat, result.coord.lon)}>
+                      <img className="result-flag" src={flag} alt="bandeira"/>
+                      <p><span className="result-city">{result.name}</span>, {country}</p>
+                    </div>
+                  )
+                })}
+
+              </div>
 
               <button type="submit" className="searchButton">
                 <RiSearchLine />
               </button>
             </form>
-              
+
+            
           </div>
           <div className="result">
             <img
@@ -244,7 +297,10 @@ function Landing() {
 
             <span className="description">{capitalizeString(String(data?.weather[0].description))}</span>
 
-            <span className="local">{`${data?.name}, ${data?.sys.country}`}</span>
+            <span className="local">
+              {`${data?.name}, ${data?.sys.country}`}&nbsp;&nbsp;
+              {data?.sys.country !== '-' && <img src={`https://raw.githubusercontent.com/hjnilsson/country-flags/master/png100px/${data?.sys.country.toLowerCase()}.png`} alt="country"/>}
+            </span>
           </div>
 
           <div className="other-results">

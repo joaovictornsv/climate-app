@@ -72,6 +72,7 @@
   border-radius: 12px;
   padding: 30px;
   width: 100%;
+
 }
 
 div.principal {
@@ -83,11 +84,28 @@ div.principal {
   grid-area: principal;
 }
 
-div.principal .header, div.principal .header form{
+div.principal .header {
+  position: relative;
+}
+
+div.principal .header, div.principal .header form {
   display: flex;
   width: 95%;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
+  position: relative;
+}
+
+div.principal .header form .snackbar {
+  top: 55px;
+  position: absolute;
+  transform: translateX(-50%);
+  left: 40%;
+  color:red;
+  font-size:12px;
+  background-color:  rgba(255, 255, 255, 0.582);
+  border-radius: 4px;
+  padding: 1px 10px;
 }
 
 div.principal .header .cityInput {
@@ -129,6 +147,61 @@ div.principal .header .searchButton:hover {
   background-color: var(--search-button-bg-hover);
 }
 
+
+div.principal .header .search-results {
+  position: absolute;
+  left: -2px;
+  top: 50px;
+  width: 85%;
+  padding: 5px;
+  justify-content: center;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  z-index: 10;
+
+  visibility: hidden;
+  transition: visibility 0.1s;
+
+}
+
+.cityInput:focus + div.search-results {
+  visibility: visible;
+}
+
+div.principal .header .search-results .result-item {
+  width: 90%;
+  padding: 10px;
+  font-size: 10px;
+  background-color:  rgba(255, 255, 255, 0.6);
+  transition: background-color 0.2s;
+  cursor: pointer;
+  justify-content: flex-start;
+  display: flex;
+  align-items: center;
+}
+
+div.principal .header .search-results .result-item:hover {
+  background-color:  rgba(255, 255, 255, 0.9);
+}
+.result-item:first-child {
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+.result-item:last-child {
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  border-bottom: none;
+}
+div.principal .header .search-results .result-item .result-flag {
+  max-width: 30px;
+  border-radius: 4px;
+  margin-right: 8px;
+}
+div.principal .header .search-results .result-item .result-city {
+  font-size: 14px;
+}
+
 div.principal .result {
   width: 100%;
   display: flex;
@@ -164,6 +237,12 @@ div.principal .result .local {
   font-size: 22px;
   line-height: 40px;
   color: #FFFFFF;
+  display: flex;
+  align-items: center;
+}
+
+div.principal .result .local img {
+  max-height: 14px;
 }
 
 div.principal .other-results {
