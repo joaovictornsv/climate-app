@@ -84,6 +84,28 @@ div.principal {
   grid-area: principal;
 }
 
+.principal .get-location {
+  background-color: var(--search-button-bg);
+  padding: 3px 15px;
+  justify-self: flex-start !important;
+  border-radius: 4px;
+  cursor: pointer;
+  
+  transition: background-color 0.2s;
+}
+
+.principal .get-location span{
+  text-decoration: none;
+  color: var(--color-text);
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.principal .get-location:hover {
+  background-color: var(--search-button-bg-hover);
+
+}
+
 div.principal .header {
   position: relative;
 }
@@ -91,33 +113,54 @@ div.principal .header {
 div.principal .header, div.principal .header form {
   display: flex;
   width: 95%;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: center;
   position: relative;
 }
 
+div.principal .header form {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr;
+  grid-template-areas:
+  'input'
+  'extras';
+}
+
+div.principal .header form .input-wrapper {
+  grid-area: input;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+div.principal .header form .extras {
+  grid-area: extras;
+  display: flex;
+  justify-content: center;
+  align-items: center
+}
+
 div.principal .header form .snackbar {
-  top: 55px;
-  position: absolute;
-  transform: translateX(-50%);
-  left: 40%;
   color:red;
-  font-size:12px;
+  font-weight: 600;
+  font-size: 16px;
   background-color:  rgba(255, 255, 255, 0.582);
   border-radius: 4px;
-  padding: 1px 10px;
+  padding: 3px 10px;
+  margin-left: 5px;;
 }
 
 div.principal .header .cityInput {
-  width: 80%;
-  height: 50px;
+  width: 90%;
+  height: 40px;
   border: 2px solid #FFFFFF;
   border-radius: 12px;
   background: none;
   padding: 10px 15px;
   outline: none;
   color: #FFFFFF;
-  font-size: 20px;
+  font-size: 16px;
 }
 
 .cityInput::placeholder {
@@ -127,8 +170,8 @@ div.principal .header .cityInput {
 div.principal .header .searchButton {
   color: #FFFFFF;
   background-color: var(--search-button-bg);
-  height: 52px;
-  width: 52px;
+  height: 42px;
+  width: 42px;
   border: none;
   border-radius: 12px;
   font-size: 22px;
@@ -209,16 +252,16 @@ div.principal .result {
   justify-content: center;
   align-items: center;
   border-bottom: 1px solid var(--color-text-light);
-  padding: 25px 0px;
+  padding: 20px 0px;
 }
 
 div.principal .result img {
-  height: 90px;
+  height: 60px;
 }
 
 div.principal .result h1 {
   position: relative;
-  font-size: 100px;
+  font-size: 80px;
   color: #FFFFFF;
 }
 
@@ -272,6 +315,7 @@ div.secondary {
   grid-template-areas:
   'header'
   'figure'
+  'link'
   ;
   width: 100%;
 }
@@ -319,7 +363,32 @@ div.secondary .secondary-results .other-secondary-results {
 }
 
 .secondary .landing-figure > img {
-  max-width: 90%;
+  max-width:70%;
+}
+
+.secondary .go-maps {
+  grid-area: link;
+  justify-self: center;
+  cursor: pointer;
+}
+
+.secondary .go-maps a {
+  text-decoration: none;
+  color: var(--color-text);
+  font-weight: 700;
+  padding: 10px 15px;
+  border-radius: 12px;
+  border: 2px solid var(--color-text);
+  background-color: var(--color-content-bg);
+  display: flex;
+  align-items: center;
+
+  transition: all 0.2s;
+}
+
+.secondary .go-maps:hover a {
+  color: var(--color-content-bg);
+  background-color: var(--color-text)
 }
 
 @media (max-width: 1250px) {
@@ -337,12 +406,28 @@ div.secondary .secondary-results .other-secondary-results {
     display: none;
   }
 
+  div.principal .result {
+    padding: 16px 0px;
+  }
+
+  div.principal .get-location, div.principal .header form .snackbar {
+    padding: 1px 10px
+  }
+
+  div.principal .header form .snackbar {
+    font-size: 14px;
+  }
+
+  div.principal .get-location span {
+    font-size: 14px;
+  }
+
   div.principal .result img {
-    height: 70px;
+    height: 50px;
   }
   
   div.principal .result h1 {
-    font-size: 80px;
+    font-size: 60px;
   }
   
   div.principal .result h1 span {
@@ -372,16 +457,28 @@ div.secondary .secondary-results .other-secondary-results {
   
   div.secondary .secondary-results .other-secondary-results {
     flex-direction: column;
-    font-size: 14px;
+    font-size: 12px;
     text-align: center;
   }
 
   div.secondary .secondary-results .other-secondary-results p {
     margin: 0;
   }
+
+  div.secondary .secondary-results .icon-secondary-results {
+    height: 30px;
+    margin-bottom: 5px;
+    align-items: center;
+    display: flex;
+  }
+
+  div.secondary .go-maps a {
+    font-size: 14px;
+    padding: 7px 10px;
+  }
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 980px) {
   #main {
     align-items: flex-start;
   }
@@ -433,9 +530,37 @@ div.secondary .secondary-results .other-secondary-results {
   div.principal {
     justify-content: space-evenly;
   }
-  
+  div.principal .result {
+    padding: 25px 0px;
+  }
+
+  div.principal .get-location, div.principal .header form .snackbar {
+    padding: 3px 10px
+  }
+
+  div.principal .header form .snackbar {
+    font-size: 14px;
+  }
+
+  div.principal .get-location span {
+    font-size: 14px;
+  }
+
   div.principal .header .cityInput {
     font-size: 16px;
+  }
+
+  div.principal .result img {
+    height: 70px;
+  }
+  
+  div.principal .result h1 {
+    font-size: 80px;
+  }
+  
+  div.principal .result h1 span {
+    font-size: 16px;
+    margin-left: 10px;
   }
 
   div.principal .other-results {
@@ -460,5 +585,14 @@ div.secondary .secondary-results .other-secondary-results {
 
   div.secondary .secondary-results .other-secondary-results p{
     margin-left: 0;
+  }
+
+  .secondary .landing-figure > img {
+    max-width:100%;
+  }
+
+  div.secondary .go-maps a {
+    font-size: 16px;
+    padding: 10px 12px;
   }
 }

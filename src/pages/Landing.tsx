@@ -23,6 +23,10 @@ import api from '../services/api';
 import search from '../services/search';
 
 interface WeatherData {
+  coord: {
+    lon: number,
+    lat: number
+  },
   weather: Array<{
     main: string,
     description: string,
@@ -65,6 +69,10 @@ interface SearchData {
 
 function Landing() {
   const dadosInicias: WeatherData = {
+    coord: {
+      lon: 0,
+      lat: 0
+    },
     weather: [{
       main: 'initial',
       description: '-',
@@ -220,10 +228,9 @@ function Landing() {
 
   function handleCityByCordinates (lat: number, lon: number) {
     api.get(`?lat=${lat}&lon=${lon}&appid=13e1cd524d80dabc2435ce6035f78427&lang=pt_br&units=metric`).then(response => {
+      setValid(true)
       setData(response.data)
     })
-
-    setValid(true)
   }
 
   function handleChangeValue(value: string) {
@@ -236,6 +243,23 @@ function Landing() {
 
   function capitalizeString(string: string) {
     return string[0].toUpperCase() + string.slice(1)
+  }
+
+  function getLocation() {
+    if ('geolocation' in navigator) {
+      navigator.geolocation.getCurrentPosition(setPosition)
+    }
+
+    else {
+      alert('Browser does not support geolocation')
+    }
+  }
+
+  function setPosition(position: Position) {
+    let latitude = position.coords.latitude
+    let longitude = position.coords.longitude
+
+    handleCityByCordinates(latitude, longitude)
   }
 
   return (
@@ -251,36 +275,46 @@ function Landing() {
         <div className="principal">
           <div className="header">
             <form onSubmit={handleCity}>
-              {!valid && (
-                <span className="snackbar">Cidade inválida</span>
-              )}
-              <input
-                placeholder="Digite uma cidade"
-                type="text"
-                name="city"
-                value={city}
-                onChange={event => {handleChangeValue(event.target.value)}}
-                className="cityInput"
-                autoComplete="off"
-              />
-
-              <div className="search-results">
-                {results && results.list.map(result => {
-                  const country = result.sys.country
-                  const flag = `https://raw.githubusercontent.com/hjnilsson/country-flags/master/png100px/${country.toLowerCase()}.png`
-                  return (
-                    <div className="result-item" onClick={() => handleCityByCordinates(result.coord.lat, result.coord.lon)}>
-                      <img className="result-flag" src={flag} alt="bandeira"/>
-                      <p><span className="result-city">{result.name}</span>, {country}</p>
-                    </div>
-                  )
-                })}
-
+              <div className="extras">
+                <div className="get-location" onClick={getLocation}>
+                  <span className="get-location-button">
+                    Minha localização
+                  </span>
+                </div>
+                {!valid && (
+                  <span className="snackbar">Cidade inválida</span>
+                )}
               </div>
+              
+              <div className="input-wrapper">
+                <input
+                  placeholder="Digite uma cidade"
+                  type="text"
+                  name="city"
+                  value={city}
+                  onChange={event => {handleChangeValue(event.target.value)}}
+                  className="cityInput"
+                  autoComplete="off"
+                />
 
-              <button type="submit" className="searchButton">
-                <RiSearchLine />
-              </button>
+                <div className="search-results">
+                  {results && results.list.map(result => {
+                    const country = result.sys.country
+                    const flag = `https://raw.githubusercontent.com/hjnilsson/country-flags/master/png100px/${country.toLowerCase()}.png`
+                    return (
+                      <div className="result-item" onClick={() => handleCityByCordinates(result.coord.lat, result.coord.lon)}>
+                        <img className="result-flag" src={flag} alt="bandeira"/>
+                        <p><span className="result-city">{result.name}</span>, {country}</p>
+                      </div>
+                    )
+                  })}
+
+                </div>
+
+                <button type="submit" className="searchButton">
+                  <RiSearchLine />
+                </button>
+              </div>
             </form>
 
             
@@ -349,7 +383,17 @@ function Landing() {
           <div className="landing-figure">
             <img src={LandingImg} alt="Landing"/>
           </div>
-          
+          {data?.name !== '-' && (
+            <div className="go-maps">
+              <a
+                href={`https://www.google.com/maps/@${data?.coord.lat},${data?.coord.lon},12z`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Abrir no Google Maps
+              </a>
+            </div>)
+          }
         </div>
       </div> {/*content*/}
       <div className="credits">
