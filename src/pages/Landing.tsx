@@ -214,10 +214,10 @@ function Landing() {
       background = nightBg
   }
 
-  function handleCity(e: FormEvent) {
+  async function handleCity(e: FormEvent) {
     e.preventDefault();
     
-    api.get(`?q=${city}&appid=13e1cd524d80dabc2435ce6035f78427&lang=pt_br&units=metric`).then(response => {
+    await api.get(`?q=${city}&appid=13e1cd524d80dabc2435ce6035f78427&lang=pt_br&units=metric`).then(response => {
       setData(response.data)
     }).catch(err => {setValid(false)})
     
@@ -226,17 +226,18 @@ function Landing() {
     }    
   }
 
-  function handleCityByCordinates (lat: number, lon: number) {
-    api.get(`?lat=${lat}&lon=${lon}&appid=13e1cd524d80dabc2435ce6035f78427&lang=pt_br&units=metric`).then(response => {
+  async function handleCityByCordinates (lat: number, lon: number) {
+    await api.get(`?lat=${lat}&lon=${lon}&appid=13e1cd524d80dabc2435ce6035f78427&lang=pt_br&units=metric`).then(response => {
       setValid(true)
       setData(response.data)
     })
   }
 
-  function handleChangeValue(value: string) {
+  async function handleChangeValue(value: string) {
     setCity(value)
+    const query = `?q=${value}&type=like&sort=population&cnt=30&appid=439d4b804bc8187953eb36d2a8c26a02&_=1604490628153`;
 
-    search.get(`?q=${value}&type=like&sort=population&cnt=30&appid=439d4b804bc8187953eb36d2a8c26a02&_=1604490628153`).then(response => {
+    await search.get(query).then(response => {
       setResults(response.data)
     })
   }
@@ -255,11 +256,11 @@ function Landing() {
     }
   }
 
-  function setPosition(position: Position) {
+  async function setPosition(position: Position) {
     let latitude = position.coords.latitude
     let longitude = position.coords.longitude
 
-    handleCityByCordinates(latitude, longitude)
+    await handleCityByCordinates(latitude, longitude)
   }
 
   return (
@@ -292,7 +293,7 @@ function Landing() {
                   type="text"
                   name="city"
                   value={city}
-                  onChange={event => {handleChangeValue(event.target.value)}}
+                  onChange={event => {handleChangeValue(event.target.value.trim())}}
                   className="cityInput"
                   autoComplete="off"
                 />
@@ -300,9 +301,10 @@ function Landing() {
                 <div className="search-results">
                   {results && results.list.map(result => {
                     const country = result.sys.country
-                    const flag = `https://raw.githubusercontent.com/hjnilsson/country-flags/master/png100px/${country.toLowerCase()}.png`
+                    const flag = `https://raw.githubusercontent.com/hjnilsson/country-flags/master/png100px/${country.toLowerCase()}.png`;
+
                     return (
-                      <div className="result-item" onClick={() => handleCityByCordinates(result.coord.lat, result.coord.lon)}>
+                      <div key={result.coord.lat} className="result-item" onClick={() => handleCityByCordinates(result.coord.lat, result.coord.lon)}>
                         <img className="result-flag" src={flag} alt="bandeira"/>
                         <p><span className="result-city">{result.name}</span>, {country}</p>
                       </div>
