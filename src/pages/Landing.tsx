@@ -217,7 +217,7 @@ function Landing() {
   async function handleCity(e: FormEvent) {
     e.preventDefault();
     
-    await api.get(`?q=${city}&appid=c62ae8d53ec964f41b101ac566cf575d&lang=pt_br&units=metric`).then(response => {
+    await api.get(`?q=${city}&appid=e81965343df414cbfb25d98c8741fe2a&lang=pt_br&units=metric`).then(response => {
       setData(response.data)
     }).catch(err => {setValid(false)})
     
@@ -227,7 +227,7 @@ function Landing() {
   }
 
   async function handleCityByCordinates (lat: number, lon: number) {
-    await api.get(`?lat=${lat}&lon=${lon}&appid=c62ae8d53ec964f41b101ac566cf575d&lang=pt_br&units=metric`).then(response => {
+    await api.get(`?lat=${lat}&lon=${lon}&appid=e81965343df414cbfb25d98c8741fe2a&lang=pt_br&units=metric`).then(response => {
       setValid(true)
       setData(response.data)
     })
