@@ -219,7 +219,7 @@ function Landing() {
     
     await api.get(`?q=${city}&appid=e81965343df414cbfb25d98c8741fe2a&lang=pt_br&units=metric`).then(response => {
       setData(response.data)
-    }).catch(err => {setValid(false)})
+    }).catch(() => {setValid(false)})
     
     if (data.name !== '-') {
       setValid(true)
@@ -235,7 +235,7 @@ function Landing() {
 
   async function handleChangeValue(value: string) {
     setCity(value)
-    const query = `?q=${value}&type=like&sort=population&cnt=30&appid=439d4b804bc8187953eb36d2a8c26a02&_=1604490628153`;
+    const query = `?q=${value.trim()}&type=like&sort=population&cnt=30&appid=439d4b804bc8187953eb36d2a8c26a02&_=1604490628153`;
 
     await search.get(query).then(response => {
       setResults(response.data)
@@ -293,7 +293,7 @@ function Landing() {
                   type="text"
                   name="city"
                   value={city}
-                  onChange={event => {handleChangeValue(event.target.value.trim())}}
+                  onChange={event => {handleChangeValue(event.target.value)}}
                   className="cityInput"
                   autoComplete="off"
                 />
@@ -342,15 +342,15 @@ function Landing() {
           <div className="other-results">
             <div className="other">
               Sensação térmica: <br/>
-              <span>{data?.main.feels_like.toFixed(0)} ºC</span>
+              <span>{data?.main.feels_like.toFixed(1)} ºC</span>
             </div>
             <div className="other">
               Temp. Mínima: <br/>
-              <span>{data?.main.temp_min.toFixed(0)} ºC</span>
+              <span>{data?.main.temp_min.toFixed(1)} ºC</span>
             </div>
             <div className="other">
               Temp. Máxima: <br/>
-              <span>{data?.main.temp_max.toFixed(0)} ºC</span>
+              <span>{data?.main.temp_max.toFixed(1)} ºC</span>
             </div>
           </div>
         </div>
