@@ -1,4 +1,4 @@
-import React, { FormEvent, useState } from 'react';
+import React, { FormEvent, useContext, useEffect, useState } from 'react';
 import { RiSearchLine, RiDropFill }  from 'react-icons/ri';
 import { WiCloudy, WiStrongWind }  from 'react-icons/wi';
 
@@ -21,6 +21,8 @@ import nightBg from '../assets/images/night_bg.jpg';
 
 import api from '../services/api';
 import search from '../services/search';
+import { LocationContext } from '../contexts/LocationContext';
+import { DebounceInput } from 'react-debounce-input';
 
 interface WeatherData {
   coord: {
@@ -104,6 +106,32 @@ function Landing() {
   const [data, setData] = useState<WeatherData>(dadosInicias)
   const [results, setResults] = useState<SearchData>()
   const [valid, setValid] = useState(true)
+
+  const {location, setLocation} = useContext(LocationContext);
+  
+  useEffect(() => {
+    if(!location) {
+      getLocation();
+    } else {
+      handleCityByCordinates(location.lat, location.lng);
+    }
+  }, []);
+
+  function getLocation() {
+    if ('geolocation' in navigator) {
+      navigator.geolocation.getCurrentPosition(position => {
+        const { latitude, longitude } = position.coords;
+        setLocation({
+          lat: latitude,
+          lng: longitude
+        });
+
+        handleCityByCordinates(latitude, longitude);
+      });
+    } else {
+      alert('Browser does not support geolocation')
+    }
+  }
 
   //clear, clouds, thunderstorm, rain, drizzle, snow
 
@@ -234,33 +262,22 @@ function Landing() {
   }
 
   async function handleChangeValue(value: string) {
-    setCity(value)
-    const query = `?q=${value.trim()}&type=like&sort=population&cnt=30&appid=439d4b804bc8187953eb36d2a8c26a02&_=1604490628153`;
+    try {
+      setCity(value)
+      const query = `?q=${value.trim()}&type=like&sort=population&cnt=30&appid=439d4b804bc8187953eb36d2a8c26a02&_=1604490628153`;
 
-    await search.get(query).then(response => {
-      setResults(response.data)
-    })
+      await search.get(query).then(response => {
+        setResults(response.data)
+      });
+      setValid(true);
+    } catch(err) {
+      setValid(false);
+      console.error(err);
+    }
   }
 
   function capitalizeString(string: string) {
     return string[0].toUpperCase() + string.slice(1)
-  }
-
-  function getLocation() {
-    if ('geolocation' in navigator) {
-      navigator.geolocation.getCurrentPosition(setPosition)
-    }
-
-    else {
-      alert('Browser does not support geolocation')
-    }
-  }
-
-  async function setPosition(position: Position) {
-    let latitude = position.coords.latitude
-    let longitude = position.coords.longitude
-
-    await handleCityByCordinates(latitude, longitude)
   }
 
   return (
@@ -288,7 +305,7 @@ function Landing() {
               </div>
               
               <div className="input-wrapper">
-                <input
+                <DebounceInput
                   placeholder="Digite uma cidade"
                   type="text"
                   name="city"
@@ -296,6 +313,7 @@ function Landing() {
                   onChange={event => {handleChangeValue(event.target.value)}}
                   className="cityInput"
                   autoComplete="off"
+                  debounceTimeout={300}
                 />
 
                 <div className="search-results">
