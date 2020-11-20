@@ -262,12 +262,18 @@ function Landing() {
   }
 
   async function handleChangeValue(value: string) {
-    setCity(value)
-    const query = `?q=${value.trim()}&type=like&sort=population&cnt=30&appid=439d4b804bc8187953eb36d2a8c26a02&_=1604490628153`;
+    try {
+      setCity(value)
+      const query = `?q=${value.trim()}&type=like&sort=population&cnt=30&appid=439d4b804bc8187953eb36d2a8c26a02&_=1604490628153`;
 
-    await search.get(query).then(response => {
-      setResults(response.data)
-    })
+      await search.get(query).then(response => {
+        setResults(response.data)
+      });
+      setValid(true);
+    } catch(err) {
+      setValid(false);
+      console.error(err);
+    }
   }
 
   function capitalizeString(string: string) {
