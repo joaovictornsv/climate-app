@@ -1,4 +1,4 @@
-import React, { FormEvent, useState } from 'react';
+import React, { FormEvent, useContext, useEffect, useState } from 'react';
 import { RiSearchLine, RiDropFill }  from 'react-icons/ri';
 import { WiCloudy, WiStrongWind }  from 'react-icons/wi';
 
@@ -21,6 +21,7 @@ import nightBg from '../assets/images/night_bg.jpg';
 
 import api from '../services/api';
 import search from '../services/search';
+import { LocationContext } from '../contexts/LocationContext';
 
 interface WeatherData {
   coord: {
@@ -104,6 +105,27 @@ function Landing() {
   const [data, setData] = useState<WeatherData>(dadosInicias)
   const [results, setResults] = useState<SearchData>()
   const [valid, setValid] = useState(true)
+
+  const {location, setLocation} = useContext(LocationContext);
+  
+  useEffect(() => {
+    getLocation();
+  }, []);
+
+  function getLocation() {
+    if ('geolocation' in navigator) {
+      navigator.geolocation.getCurrentPosition(position => {
+        setLocation({
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        });
+
+        handleCityByCordinates(location?.lat, location?.lng);
+      });
+    } else {
+      alert('Browser does not support geolocation')
+    }
+  }
 
   //clear, clouds, thunderstorm, rain, drizzle, snow
 
@@ -244,23 +266,6 @@ function Landing() {
 
   function capitalizeString(string: string) {
     return string[0].toUpperCase() + string.slice(1)
-  }
-
-  function getLocation() {
-    if ('geolocation' in navigator) {
-      navigator.geolocation.getCurrentPosition(setPosition)
-    }
-
-    else {
-      alert('Browser does not support geolocation')
-    }
-  }
-
-  async function setPosition(position: Position) {
-    let latitude = position.coords.latitude
-    let longitude = position.coords.longitude
-
-    await handleCityByCordinates(latitude, longitude)
   }
 
   return (
