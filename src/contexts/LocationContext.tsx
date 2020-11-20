@@ -7,12 +7,12 @@ interface LocationCoords {
 }
 
 type LocationContextType = {
-  location: LocationCoords;
+  location: LocationCoords|null;
   setLocation: (location: LocationCoords) => void;
 }
 
 export const LocationContext = createContext<LocationContextType>({
-  location: { lat: 0, lng: 0},
+  location: null,
   setLocation: () => {}
 });
 

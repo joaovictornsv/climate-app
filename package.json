@@ -13,6 +13,7 @@
     "axios": "^0.21.0",
     "js-cookie": "^2.2.1",
     "react": "^17.0.1",
+    "react-debounce-input": "^3.2.3",
     "react-dom": "^17.0.1",
     "react-icons": "^3.11.0",
     "react-scripts": "4.0.0",

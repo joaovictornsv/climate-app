@@ -22,6 +22,7 @@ import nightBg from '../assets/images/night_bg.jpg';
 import api from '../services/api';
 import search from '../services/search';
 import { LocationContext } from '../contexts/LocationContext';
+import { DebounceInput } from 'react-debounce-input';
 
 interface WeatherData {
   coord: {
@@ -109,18 +110,23 @@ function Landing() {
   const {location, setLocation} = useContext(LocationContext);
   
   useEffect(() => {
-    getLocation();
+    if(!location) {
+      getLocation();
+    } else {
+      handleCityByCordinates(location.lat, location.lng);
+    }
   }, []);
 
   function getLocation() {
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition(position => {
+        const { latitude, longitude } = position.coords;
         setLocation({
-          lat: position.coords.latitude,
-          lng: position.coords.longitude
+          lat: latitude,
+          lng: longitude
         });
 
-        handleCityByCordinates(location?.lat, location?.lng);
+        handleCityByCordinates(latitude, longitude);
       });
     } else {
       alert('Browser does not support geolocation')
@@ -293,7 +299,7 @@ function Landing() {
               </div>
               
               <div className="input-wrapper">
-                <input
+                <DebounceInput
                   placeholder="Digite uma cidade"
                   type="text"
                   name="city"
@@ -301,6 +307,7 @@ function Landing() {
                   onChange={event => {handleChangeValue(event.target.value)}}
                   className="cityInput"
                   autoComplete="off"
+                  debounceTimeout={300}
                 />
 
                 <div className="search-results">
