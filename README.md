@@ -1,7 +1,7 @@
 <div  align="center">
 <!-- Top Image and Title -->
 <h1>
-<img  src="https://i.imgur.com/WLvRyT3.png"  width="300px"><br/>
+<img  src="https://i.imgur.com/fwXrMvl.png"  width="300px"><br/>
 </h1>
 <!-- Subtitle/Description -->
 <h4>Climate App é uma aplicação responsável por mostrar dados climáticos de uma determinada cidade em tempo real.</h4>
@@ -21,8 +21,8 @@
 <a href="#information_source-how-to-use">How To Use</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
 <a href="#gift-contributing">Contributing</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
 <a  href="#memo-licença">License</a><br/><br/>
-<img  width="100%"  src="https://i.imgur.com/4VN5IVI.png">
-<img  width="100%"  src="https://i.imgur.com/6IkbcKd.png">
+<img  width="100%"  src="https://i.imgur.com/yFXccOq.png">
+<img  width="100%"  src="https://i.imgur.com/PgAnFdd.png">
 </div>
 
 ---
