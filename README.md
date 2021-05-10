@@ -66,8 +66,10 @@ Please make sure to update tests as appropriate.
 ---
   
 ### :pencil2: Author
+<div align="center">
 <table>
   <tr>
     <td align="center"><a href="https://github.com/joaovictornsv"><img src="https://github.com/joaovictornsv.png" width="100px;" alt="Profile"/><br /><sub><b>João Victor</b></sub></a><br /><a href="https://github.com/joaovictornsv" title="Code">💻</a></td>
   <tr>
 </table>
+</div>
