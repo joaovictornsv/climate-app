@@ -63,8 +63,8 @@ Please make sure to update tests as appropriate.
 
 ### :memo: License
 - :balance_scale: MIT License - [About](https://github.com/joaovictornsv/climate-app/blob/master/LICENSE)
+
 ---
-  
 
 <div>
   <img align="left" src="https://i.imgur.com/ufUYAFh.png" width=35 alt="Profile"/>
