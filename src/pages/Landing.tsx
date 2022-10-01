@@ -23,6 +23,7 @@ import api from '../services/api';
 import search from '../services/search';
 import { LocationContext } from '../contexts/LocationContext';
 import { DebounceInput } from 'react-debounce-input';
+import { MotionBox } from '../components/MotionBox';
 
 interface WeatherData {
   coord: {
@@ -287,133 +288,135 @@ function Landing() {
       <div className="app-name">
         <img src={climateLogo} alt="Climate"/>
       </div>
-      <div className="content">
-        <div className="principal">
-          <div className="header">
-            <form onSubmit={handleCity}>
-              <div className="extras">
-                <div className="get-location" onClick={getLocation}>
-                  <span className="get-location-button">
-                    Minha localização
-                  </span>
+      <MotionBox>
+          <div className="content">
+          <div className="principal">
+            <div className="header">
+              <form onSubmit={handleCity}>
+                <div className="extras">
+                  <div className="get-location" onClick={getLocation}>
+                    <span className="get-location-button">
+                      Minha localização
+                    </span>
+                  </div>
+                  {!valid && (
+                    <span className="snackbar">Cidade inválida</span>
+                  )}
                 </div>
-                {!valid && (
-                  <span className="snackbar">Cidade inválida</span>
-                )}
+                
+                <div className="input-wrapper">
+                  <DebounceInput
+                    placeholder="Digite uma cidade"
+                    type="text"
+                    name="city"
+                    value={city}
+                    onChange={event => {handleChangeValue(event.target.value)}}
+                    className="cityInput"
+                    autoComplete="off"
+                    debounceTimeout={300}
+                  />
+
+                  <div className="search-results">
+                    {results && results.list.map(result => {
+                      const country = result.sys.country
+                      const flag = `https://raw.githubusercontent.com/hjnilsson/country-flags/master/png100px/${country.toLowerCase()}.png`;
+
+                      return (
+                        <div key={result.coord.lat} className="result-item" onClick={() => handleCityByCordinates(result.coord.lat, result.coord.lon)}>
+                          <img className="result-flag" src={flag} alt="bandeira"/>
+                          <p><span className="result-city">{result.name}</span>, {country}</p>
+                        </div>
+                      )
+                    })}
+
+                  </div>
+
+                  <button type="submit" className="searchButton">
+                    <RiSearchLine />
+                  </button>
+                </div>
+              </form>
+
+              
+            </div>
+            <div className="result">
+              <img
+                src={icon}
+                alt="Clima"
+                className="weather-icon"
+              />
+              <h1 className="temperature">
+                {data?.main.temp.toFixed(0)}<span>ºC</span>
+              </h1>
+
+              <span className="description">{capitalizeString(String(data?.weather[0].description))}</span>
+
+              <span className="local">
+                {`${data?.name}, ${data?.sys.country}`}&nbsp;&nbsp;
+                {data?.sys.country !== '-' && <img src={`https://raw.githubusercontent.com/hjnilsson/country-flags/master/png100px/${data?.sys.country.toLowerCase()}.png`} alt="country"/>}
+              </span>
+            </div>
+
+            <div className="other-results">
+              <div className="other">
+                Sensação térmica: <br/>
+                <span>{data?.main.feels_like.toFixed(1)} ºC</span>
+              </div>
+              <div className="other">
+                Temp. Mínima: <br/>
+                <span>{data?.main.temp_min.toFixed(1)} ºC</span>
+              </div>
+              <div className="other">
+                Temperatura Máxima: <br/>
+                <span>{data?.main.temp_max.toFixed(1)} ºC</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="secondary">
+            <div className="secondary-results">
+              <div className="other-secondary-results">
+                <div className="icon-secondary-results humidity">
+                  <RiDropFill />
+                </div>
+                <p>Umidade: <br/>
+                {data?.main.humidity}%</p>
               </div>
               
-              <div className="input-wrapper">
-                <DebounceInput
-                  placeholder="Digite uma cidade"
-                  type="text"
-                  name="city"
-                  value={city}
-                  onChange={event => {handleChangeValue(event.target.value)}}
-                  className="cityInput"
-                  autoComplete="off"
-                  debounceTimeout={300}
-                />
-
-                <div className="search-results">
-                  {results && results.list.map(result => {
-                    const country = result.sys.country
-                    const flag = `https://raw.githubusercontent.com/hjnilsson/country-flags/master/png100px/${country.toLowerCase()}.png`;
-
-                    return (
-                      <div key={result.coord.lat} className="result-item" onClick={() => handleCityByCordinates(result.coord.lat, result.coord.lon)}>
-                        <img className="result-flag" src={flag} alt="bandeira"/>
-                        <p><span className="result-city">{result.name}</span>, {country}</p>
-                      </div>
-                    )
-                  })}
-
+              <div className="other-secondary-results">
+                <div className="icon-secondary-results">
+                  <WiStrongWind />
                 </div>
-
-                <button type="submit" className="searchButton">
-                  <RiSearchLine />
-                </button>
+                <p>Vento: <br/>
+                {data?.wind.speed.toFixed(1)} m/s</p>
               </div>
-            </form>
 
-            
-          </div>
-          <div className="result">
-            <img
-              src={icon}
-              alt="Clima"
-              className="weather-icon"
-            />
-            <h1 className="temperature">
-              {data?.main.temp.toFixed(0)}<span>ºC</span>
-            </h1>
-
-            <span className="description">{capitalizeString(String(data?.weather[0].description))}</span>
-
-            <span className="local">
-              {`${data?.name}, ${data?.sys.country}`}&nbsp;&nbsp;
-              {data?.sys.country !== '-' && <img src={`https://raw.githubusercontent.com/hjnilsson/country-flags/master/png100px/${data?.sys.country.toLowerCase()}.png`} alt="country"/>}
-            </span>
-          </div>
-
-          <div className="other-results">
-            <div className="other">
-              Sensação térmica: <br/>
-              <span>{data?.main.feels_like.toFixed(1)} ºC</span>
-            </div>
-            <div className="other">
-              Temp. Mínima: <br/>
-              <span>{data?.main.temp_min.toFixed(1)} ºC</span>
-            </div>
-            <div className="other">
-              Temperatura Máxima: <br/>
-              <span>{data?.main.temp_max.toFixed(1)} ºC</span>
-            </div>
-          </div>
-        </div>
-
-        <div className="secondary">
-          <div className="secondary-results">
-            <div className="other-secondary-results">
-              <div className="icon-secondary-results humidity">
-                <RiDropFill />
+              <div className="other-secondary-results">
+                <div className="icon-secondary-results">
+                  <WiCloudy />
+                </div>
+                <p>Nuvens: <br/>
+                {data?.clouds.all}%</p>
               </div>
-              <p>Umidade: <br/>
-              {data?.main.humidity}%</p>
-            </div>
-            
-            <div className="other-secondary-results">
-              <div className="icon-secondary-results">
-                <WiStrongWind />
-              </div>
-              <p>Vento: <br/>
-              {data?.wind.speed.toFixed(1)} m/s</p>
-            </div>
 
-            <div className="other-secondary-results">
-              <div className="icon-secondary-results">
-                <WiCloudy />
-              </div>
-              <p>Nuvens: <br/>
-              {data?.clouds.all}%</p>
             </div>
-
+            <div className="landing-figure">
+              <img src={LandingImg} alt="Landing"/>
+            </div>
+            {data?.name !== '-' && (
+              <div className="go-maps">
+                <a
+                  href={`https://www.google.com/maps/@${data?.coord.lat},${data?.coord.lon},12z`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Abrir no Google Maps
+                </a>
+              </div>)
+            }
           </div>
-          <div className="landing-figure">
-            <img src={LandingImg} alt="Landing"/>
-          </div>
-          {data?.name !== '-' && (
-            <div className="go-maps">
-              <a
-                href={`https://www.google.com/maps/@${data?.coord.lat},${data?.coord.lon},12z`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Abrir no Google Maps
-              </a>
-            </div>)
-          }
-        </div>
-      </div> {/*content*/}
+        </div> {/*content*/}
+      </MotionBox>
       <div className="credits">
         by&nbsp;
         <a href="https://github.com/joaovictornsv" target="_blank" rel="noopener noreferrer">
