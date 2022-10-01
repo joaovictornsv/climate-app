@@ -133,8 +133,6 @@ function Landing() {
     }
   }
 
-  //clear, clouds, thunderstorm, rain, drizzle, snow
-
   let LandingImg = inicialFigure
 
   switch (data?.weather[0].main) {
@@ -367,7 +365,7 @@ function Landing() {
               <span>{data?.main.temp_min.toFixed(1)} ºC</span>
             </div>
             <div className="other">
-              Temp. Máxima: <br/>
+              Temperatura Máxima: <br/>
               <span>{data?.main.temp_max.toFixed(1)} ºC</span>
             </div>
           </div>
