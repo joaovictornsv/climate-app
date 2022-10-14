@@ -16,7 +16,7 @@ import cloudyFigure from '../assets/images/landing_svgs/cloudy.svg';
 
 import initialIcon from '../assets/images/icons/04.svg';
 
-import dayBg from '../assets/images/day_bg.png';
+import dayBg from '../assets/images/day_bg.jpg';
 import nightBg from '../assets/images/night_bg.jpg';
 
 import api from '../services/api';
