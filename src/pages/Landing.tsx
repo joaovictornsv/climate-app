@@ -16,8 +16,17 @@ import cloudyFigure from '../assets/images/landing_svgs/cloudy.svg';
 
 import initialIcon from '../assets/images/icons/04.svg';
 
-import dayBg from '../assets/images/day_bg.jpg';
-import nightBg from '../assets/images/night_bg.jpg';
+import dayBg from '../assets/images/Backgrounds/day_bg.jpg';
+import nightBg from '../assets/images/Backgrounds/night_bg.jpg';
+import snowyBg from '../assets/images/Backgrounds/snowy_day_bg.webp';
+import thunderstormBg from '../assets/images/Backgrounds/thunderstorm_bg.jpg';
+import hazeNightBg from '../assets/images/Backgrounds/haze_night_bg.jpg';
+import hazeDayBg from '../assets/images/Backgrounds/haze_day_bg.jpg';
+import cloudyDayBg from '../assets/images/Backgrounds/cloudy_day_bg.png';
+import cloudyNightBg from '../assets/images/Backgrounds/cloudy_night_bg.jpg';
+import rainyBg from '../assets/images/Backgrounds/rainy_bg.webp';
+
+
 
 import api from '../services/api';
 import search from '../services/search';
@@ -134,35 +143,50 @@ function Landing() {
     }
   }
 
+  let background = dayBg
+  let day = true;
+
+  switch (data?.weather[0].icon.slice(2)) {
+    case 'n':
+      day = false;
+  }
+
   let LandingImg = inicialFigure
 
   switch (data?.weather[0].main) {
     case 'Clear':
       LandingImg = sunFigure;
+      background = day ? dayBg : nightBg;
       break
 
     case 'Clouds':
       LandingImg = sunFigure;
+      background = day ? cloudyDayBg : cloudyNightBg;
       break
 
     case 'Haze':
       LandingImg = cloudyFigure;
+      background = day ? hazeDayBg : hazeNightBg;
       break
 
     case 'Thunderstorm':
       LandingImg = thunderFigure;
+      background = thunderstormBg;
       break
       
     case 'Rain':
       LandingImg = rainFigure;
+      background = rainyBg;
       break
 
     case 'Drizzle':
       LandingImg = rainFigure;
+      background = rainyBg;
       break
 
     case 'Snow':
       LandingImg = snowFigure;
+      background = snowyBg;
       break
 
     default:
@@ -232,13 +256,6 @@ function Landing() {
     case '50n':
       icon = images[13].default
       break
-  }
-
-  let background = dayBg
-
-  switch (data?.weather[0].icon.slice(2)) {
-    case 'n':
-      background = nightBg
   }
 
   async function handleCity(e: FormEvent) {
