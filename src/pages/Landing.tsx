@@ -34,6 +34,12 @@ import { LocationContext } from '../contexts/LocationContext';
 import { DebounceInput } from 'react-debounce-input';
 import { MotionBox } from '../components/MotionBox';
 
+
+const icons = require.context( '../assets/images/icons', true, /\.(png|jpe?g|svg)$/);
+const paths = icons.keys ()
+const images = paths.map( path => icons ( path ) )
+
+
 interface WeatherData {
   coord: {
     lon: number,
@@ -152,7 +158,7 @@ function Landing() {
   }
 
   let LandingImg = inicialFigure
-
+  
   switch (data?.weather[0].main) {
     case 'Clear':
       LandingImg = sunFigure;
@@ -194,67 +200,63 @@ function Landing() {
       break
   }
 
-  const icons = require.context( '../assets/images/icons', true, /\.(png|jpe?g|svg)$/);
-  const paths = icons.keys ()
-  const images = paths.map( path => icons ( path ) )
 
   let icon = initialIcon
-
   switch (data?.weather[0].icon) {
     case '01d':
-      icon = images[0].default
+      icon = images[0]
       break
 
     case '01n':
-      icon = images[1].default
+      icon = images[1]
       break
 
     case '02d':
-      icon = images[2].default
+      icon = images[2]
       break
 
     case '02n':
-      icon = images[3].default
+      icon = images[3]
       break
 
-    case '03d' || '03n' || '04d' || '04n':
-      icon = images[4].default
+    case '03d'|| '03n' || '04d' || '04n':
+      icon = images[4]
       break
 
     case '09d':
-      icon = images[5].default
+      icon = images[5]
       break
 
     case '09n':
-      icon = images[6].default
+      icon = images[6]
       break
 
     case '10d' || '10n':
-      icon = images[7].default
+      icon = images[7]
       break
 
     case '11d':
-      icon = images[8].default
+      icon = images[8]
       break
     
     case '11n':
-      icon = images[9].default
+      icon = images[9]
       break
 
     case '13d':
-      icon = images[10].default
+      icon = images[10]
       break
 
     case '13n':
-      icon = images[11].default
+      icon = images[11]
       break
 
     case '50d':
-      icon = images[12].default
+      icon = images[12]
       break
 
     case '50n':
-      icon = images[13].default
+      icon = images[13]
       break
   }
 
