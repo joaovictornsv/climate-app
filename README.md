@@ -67,6 +67,5 @@ Please make sure to update tests as appropriate.
 ---
 
 <div>
-  <img align="left" src="https://i.imgur.com/ufUYAFh.png" width=35 alt="Profile"/>
   <sub>Made with 💙 by <a href="https://github.com/joaovictornsv">João Victor</a></sub>
 </div>
